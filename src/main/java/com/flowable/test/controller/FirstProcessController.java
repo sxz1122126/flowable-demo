@@ -8,6 +8,9 @@
 package com.flowable.test.controller;
 
 import com.flowable.test.service.FirstProcessService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -21,17 +24,20 @@ import java.util.List;
  * @Description:
  * @date 20/03/04
  */
+@Api(value = "Hello world", tags = "Hello world!")
 @RestController
 public class FirstProcessController {
 
         @Autowired
         private FirstProcessService myService;
 
+        @ApiOperation(value = "开始第一个流程",notes = "开始第一个流程",httpMethod = "POST")
         @PostMapping(value="/process")
         public void startProcessInstance() {
             myService.startProcess();
         }
 
+        @ApiOperation(value = "获取用户节点",notes = "获取当前用户节点",httpMethod = "GET")
         @GetMapping(value="/tasks", produces= MediaType.APPLICATION_JSON_VALUE)
         public List<TaskRepresentation> getTasks(@RequestParam String assignee) {
             List<Task> tasks = myService.getTasks(assignee);
